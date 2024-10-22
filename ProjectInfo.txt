@@ -1,0 +1,12 @@
+
+
+1.Users
+  Admin , Trainer , Student
+
+2.Courses
+  BATCH 1, BATCH 2
+
+3.Assignments
+
+4.Feedbacks
+  
