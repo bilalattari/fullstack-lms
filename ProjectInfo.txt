@@ -1,12 +1,13 @@
 
 
-1.Users
-  Admin , Trainer , Student
+USER / Trainer
 
-2.Courses
-  BATCH 1, BATCH 2
-
-3.Assignments
-
-4.Feedbacks
-  
+1.First Name
+2.Last Name
+3.Education
+4.CNIC
+5.Email
+6.Profile Picture
+7.Address
+8.Gender
+9.role - trainer,student
