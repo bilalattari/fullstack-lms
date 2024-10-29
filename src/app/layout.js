@@ -1,5 +1,7 @@
 import localFont from "next/font/local";
 import "./globals.css";
+import { motion } from "framer-motion";
+import Transition from "@/components/TransitionProvider/TransitionProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,7 +25,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Transition>{children}</Transition>
       </body>
     </html>
   );
