@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 export async function POST(request) {
   await connectDB();
   const obj = await request.json();
-  console.log("obj=>", obj);
   //check this user exist
   const user = await UserModal.findOne({ email: obj.email });
   if (user)
