@@ -15,10 +15,17 @@ export async function POST(request) {
   });
 }
 
-export async function GET() {
+export async function GET(req) {
   await connectDB();
+  const reqUrl = req.url;
+  const { searchParams } = new URL(reqUrl);
+  const query = {};
+  if (searchParams.get("course")) {
+    query.course = searchParams.get("course");
+  }
 
-  const batches = await BatchModal.find().populate("course" , "title");
+  console.log("query=>", query);
+  const batches = await BatchModal.find(query).populate("course", "title");
   return Response.json({
     error: false,
     msg: "Batched Fetched Successfully",
