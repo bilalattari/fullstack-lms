@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/dbConnect";
 import { BatchModal } from "@/lib/modals/BatchModal";
+import { CourseModal } from "@/lib/modals/CourseModal";
 
 export async function POST(request) {
   await connectDB();
@@ -17,7 +18,7 @@ export async function POST(request) {
 export async function GET() {
   await connectDB();
 
-  const batches = await BatchModal.find();
+  const batches = await BatchModal.find().populate("course" , "title");
   return Response.json({
     error: false,
     msg: "Batched Fetched Successfully",
