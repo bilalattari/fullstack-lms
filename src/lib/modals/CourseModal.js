@@ -8,6 +8,7 @@ const courseSchema = new Schema(
     description: String,
     duration: String,
     eligibility: [String],
+    thumbnail: String,
   },
   { timestamps: true }
 );

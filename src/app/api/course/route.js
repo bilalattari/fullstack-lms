@@ -21,6 +21,6 @@ export async function GET() {
   return Response.json({
     error: false,
     msg: "Course Fetched Successfully",
-    course: courses,
+    courses: courses,
   });
 }
