@@ -32,30 +32,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-const data = [
-  {
-    id: "m5gr84i9",
-    course: "Web and App Development",
-    status: "active",
-    duration: "1 Year",
-    description: "Make Student Complete Web and App developer from Scratch.",
-  },
-  {
-    id: "3u1reuv4",
-    course: "App Development",
-    status: "active",
-    duration: "4 months",
-    description: "Make Web DEVELOPER also App Developer",
-  },
-  {
-    id: "derv1ws0",
-    course: "Python Development",
-    status: "active",
-    duration: "4 months",
-    description: "Learn Python from Scratch",
-  },
-];
+import Image from "next/image";
 
 export const columns = [
   {
@@ -81,14 +58,24 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "thumbnail",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Thumbnail
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
+      <Image src={row.getValue("thumbnail")} height={50} width={80} />
     ),
   },
   {
-    accessorKey: "course",
+    accessorKey: "title",
     header: ({ column }) => {
       return (
         <Button
@@ -100,9 +87,7 @@ export const columns = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div>{row.getValue("course")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("title")}</div>,
   },
   {
     accessorKey: "description",
@@ -117,9 +102,7 @@ export const columns = [
         </Button>
       );
     },
-    cell: ({ row }) => (
-      <div>{row.getValue("description")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("description")}</div>,
   },
   {
     accessorKey: "duration",
@@ -127,6 +110,13 @@ export const columns = [
     cell: ({ row }) => {
       const amount = row.getValue("duration");
       return <div className="text-right font-medium">{amount}</div>;
+    },
+  },
+  {
+    accessorKey: "eligibility",
+    header: () => <div className="text-right">Eligibility</div>,
+    cell: ({ row }) => {
+      return <div>{row.getValue("eligibility").join(" , ")}</div>;
     },
   },
   {
@@ -160,14 +150,14 @@ export const columns = [
   },
 ];
 
-export function CourseTable() {
+export function CourseTable({ courses }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});
   const [rowSelection, setRowSelection] = useState({});
 
   const table = useReactTable({
-    data,
+    data: courses,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -190,9 +180,9 @@ export function CourseTable() {
       <div className="flex items-center py-4">
         <Input
           placeholder="Filter course..."
-          value={table.getColumn("course")?.getFilterValue() ?? ""}
+          value={table.getColumn("title")?.getFilterValue() ?? ""}
           onChange={(event) =>
-            table.getColumn("course")?.setFilterValue(event.target.value)
+            table.getColumn("title")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />

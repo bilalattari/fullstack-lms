@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
@@ -31,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { addCourse } from "@/actions/courses";
 
 export function CourseDialog() {
   const [open, setOpen] = React.useState(false);
@@ -78,31 +79,31 @@ export function CourseDialog() {
 
 function CourseForm({ className }) {
   return (
-    <form className={cn("grid items-start gap-4", className)}>
+    <form
+      action={addCourse}
+      className={cn("grid items-start gap-4", className)}
+    >
       <div className="grid gap-2">
-        <Label htmlFor="course">Course</Label>
-        <Input  required type="text" id="course" defaultValue="" />
+        <Label htmlFor="course">Course Title</Label>
+        <Input required type="text" id="course" name={"title"} />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="duration">Duration</Label>
-        <Input required id="duration" defaultValue="" />
+        <Input required id="duration" name={"duration"} />
       </div>
       <div className="grid gap-2">
         <Label htmlFor="description">Description</Label>
-        <Input required id="description" defaultValue="" />
+        <Input required id="description" name={"description"} />
       </div>
       <div className="grid gap-2">
-        <Label htmlFor="description">Status</Label>
-        <Select required>
-          <SelectTrigger>
-            <SelectValue placeholder="Active - Not-Active" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="not-active">Not Active</SelectItem>
-          </SelectContent>
-        </Select>
+        <Label htmlFor="eligibility">Eligibility</Label>
+        <Input required id="eligibility" name={"eligibility"} />
       </div>
+      <div className="grid gap-2">
+        <Label htmlFor="thumbnail">Thumbnail</Label>
+        <Input type={"url"} name={"thumbnail"} required id="thumbnail" />
+      </div>
+
       <Button type="submit">Add Course</Button>
     </form>
   );

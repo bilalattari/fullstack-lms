@@ -34,32 +34,6 @@ import {
 } from "@/components/ui/table";
 
 // Sample data
-const data = [
-  {
-    id: "1",
-    batchName: "Batch A",
-    status: "ongoing",
-    trainer: "John Doe",
-    noOfStudents: 25,
-    course: "Web and App Development",
-  },
-  {
-    id: "2",
-    batchName: "Batch B",
-    status: "pending",
-    trainer: "Jane Smith",
-    noOfStudents: 20,
-    course: "App Development",
-  },
-  {
-    id: "3",
-    batchName: "Batch C",
-    status: "completed",
-    trainer: "Alice Johnson",
-    noOfStudents: 30,
-    course: "Python Development",
-  },
-];
 
 // Define columns
 export const columns = [
@@ -86,7 +60,7 @@ export const columns = [
     enableHiding: false,
   },
   {
-    accessorKey: "batchName",
+    accessorKey: "title",
     header: ({ column }) => (
       <Button
         variant="ghost"
@@ -96,27 +70,7 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("batchName")}</div>,
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "trainer",
-    header: "Trainer",
-    cell: ({ row }) => <div>{row.getValue("trainer")}</div>,
-  },
-  {
-    accessorKey: "noOfStudents",
-    header: () => <div className="text-right">No. of Students</div>,
-    cell: ({ row }) => {
-      const students = row.getValue("noOfStudents");
-      return <div className="text-right font-medium">{students}</div>;
-    },
+    cell: ({ row }) => <div>{row.getValue("title")}</div>,
   },
   {
     accessorKey: "course",
@@ -129,8 +83,16 @@ export const columns = [
         <ArrowUpDown className="ml-2 h-4 w-4" />
       </Button>
     ),
-    cell: ({ row }) => <div>{row.getValue("course")}</div>,
+    cell: ({ row }) => <div>{row.getValue("course")?.title}</div>,
   },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("status")}</div>
+    ),
+  },
+
   {
     id: "actions",
     enableHiding: false,
@@ -163,7 +125,7 @@ export const columns = [
 ];
 
 // BatchesTable component
-export function BatchesTable() {
+export function BatchesTable({ data }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const [columnVisibility, setColumnVisibility] = useState({});

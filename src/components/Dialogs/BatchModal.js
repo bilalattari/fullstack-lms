@@ -28,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { addBatch } from "@/actions/batches";
 
 // Mock data for Trainers and Courses
 const trainers = [
@@ -36,13 +37,7 @@ const trainers = [
   { id: "trainer3", name: "Alice Johnson" },
 ];
 
-const courses = [
-  { id: "course1", name: "Web and App Development" },
-  { id: "course2", name: "App Development" },
-  { id: "course3", name: "Python Development" },
-];
-
-export function BatchModal() {
+export function BatchModal({ courses }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = true;
 
@@ -56,7 +51,7 @@ export function BatchModal() {
           <DialogHeader>
             <DialogTitle>Add Batch</DialogTitle>
           </DialogHeader>
-          <BatchForm />
+          <BatchForm courses={courses} />
         </DialogContent>
       </Dialog>
     );
@@ -82,65 +77,42 @@ export function BatchModal() {
   );
 }
 
-function BatchForm({ className }) {
+function BatchForm({ className, courses }) {
   return (
-    <form className={cn("grid items-start gap-4", className)}>
+    <form action={addBatch} className={cn("grid items-start gap-4", className)}>
       {/* Batch Name */}
       <div className="grid gap-2">
         <Label htmlFor="batchName">Batch Name</Label>
-        <Input required type="text" id="batchName" defaultValue="" />
+        <Input
+          required
+          type="text"
+          id="batchName"
+          name="title"
+          defaultValue=""
+        />
       </div>
-
-      {/* Status */}
       <div className="grid gap-2">
-        <Label htmlFor="status">Status</Label>
-        <Select required>
-          <SelectTrigger>
-            <SelectValue placeholder="Pending, Completed, Ongoing, Merged" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-            <SelectItem value="ongoing">Ongoing</SelectItem>
-            <SelectItem value="merged">Merged</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* Trainer */}
-      <div className="grid gap-2">
-        <Label htmlFor="trainer">Trainer</Label>
-        <Select required>
-          <SelectTrigger>
-            <SelectValue placeholder="Select Trainer" />
-          </SelectTrigger>
-          <SelectContent>
-            {trainers.map((trainer) => (
-              <SelectItem key={trainer.id} value={trainer.name}>
-                {trainer.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      {/* No of Students */}
-      <div className="grid gap-2">
-        <Label htmlFor="noOfStudents">No of Students</Label>
-        <Input required type="number" id="noOfStudents" defaultValue="" />
+        <Label htmlFor="batchName">Description</Label>
+        <Input
+          required
+          type="text"
+          id="batchName"
+          name="description"
+          defaultValue=""
+        />
       </div>
 
       {/* Course */}
       <div className="grid gap-2">
         <Label htmlFor="course">Course</Label>
-        <Select required>
+        <Select required name="course">
           <SelectTrigger>
             <SelectValue placeholder="Select Course" />
           </SelectTrigger>
           <SelectContent>
             {courses.map((course) => (
-              <SelectItem key={course.id} value={course.name}>
-                {course.name}
+              <SelectItem key={course._id} value={course._id}>
+                {course.title}
               </SelectItem>
             ))}
           </SelectContent>
