@@ -19,6 +19,9 @@ export default async function Layout({ children }) {
           <Link href={`/admin/batches`}>
             <TabsTrigger value="batches">Batches</TabsTrigger>
           </Link>
+          <Link href={`/admin/admissions`}>
+            <TabsTrigger value="admissions">Admissions</TabsTrigger>
+          </Link>
           <Link href={`/admin/trainers`}>
             <TabsTrigger value="trainers">Trainers</TabsTrigger>
           </Link>
@@ -29,6 +32,7 @@ export default async function Layout({ children }) {
         <TabsContent value="dashboard">{children}</TabsContent>
         <TabsContent value="courses">{children}</TabsContent>
         <TabsContent value="batches">{children}</TabsContent>
+        <TabsContent value="admissions">{children}</TabsContent>
         <TabsContent value="trainers">{children}</TabsContent>
         <TabsContent value="students">{children}</TabsContent>
       </Tabs>

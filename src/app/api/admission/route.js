@@ -47,10 +47,13 @@ export async function GET(req) {
   if (searchParams.get("batch")) {
     query.batch = searchParams.get("batch");
   }
+  console.log("STatus in API=>", searchParams.get("status"));
+  if (searchParams.get("status")) {
+    query.status = searchParams.get("status");
+  }
 
-  console.log("query=>", query);
   const admissions = await AdmissionModal.find(query)
-    .populate("course", "title")
+    .populate("course", "title description")
     .populate("batch", "title");
   return Response.json({
     error: false,
