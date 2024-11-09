@@ -9,7 +9,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
-export function CourseSection({ admissions }) {
+import { ApplicationModalForm } from "../Dialogs/ApplicationModal";
+export function CourseSection({ admissions, session }) {
   return (
     <section className="container mx-auto my-10 ">
       <div className="flex justify-between">
@@ -27,7 +28,7 @@ export function CourseSection({ admissions }) {
                 <p>{admission.course.description}</p>
               </CardContent>
               <CardFooter>
-                <Button>Apply for Course</Button>
+                <ApplicationModalForm session={session} admission={admission} />
               </CardFooter>
             </Card>
           );

@@ -8,6 +8,19 @@ import { ApplicationModal } from "@/lib/modals/ApplicationModal";
 export async function POST(request) {
   await connectDB();
   const obj = await request.json();
+  console.log("obj in backend=>", obj);
+  const application = await ApplicationModal.findOne({
+    admission: obj.admission,
+    user: obj.user,
+  });
+
+  console.log("application in backend=>", application);
+  if (application) {
+    return Response.json({
+      error: true,
+      msg: "You have already applied to this course.",
+    });
+  }
   let newApplication = new ApplicationModal({ ...obj });
   newApplication = await newApplication.save();
 
@@ -39,7 +52,7 @@ export async function GET(req) {
   const applications = await ApplicationModal.find(query)
     .populate("course", "title")
     .populate("batch", "title")
-    .populate("admission" , "startDate endDate status")
+    .populate("admission", "startDate endDate status")
     .populate("user", "fullname email profileImg");
   return Response.json({
     error: false,

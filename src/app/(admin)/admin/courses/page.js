@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export default async function Courses() {
   const { courses } = await getCourses();
-  console.log("courses=>", courses);
+  // console.log("courses=>", courses);
   return (
     <div className="min-h-screen p-10">
       <div className="flex justify-between my-2">

@@ -11,8 +11,8 @@ export default async function Admissions() {
   const { courses } = await getCourses();
   const { batches } = await getBatches();
 
-  console.log("courses=>", courses);
-  console.log("batches=>", batches);
+  console.log("admissions=>", admissions);
+  // console.log("batches=>", batches);
   return (
     <div className="min-h-screen p-10">
       <div className="flex justify-between my-2">

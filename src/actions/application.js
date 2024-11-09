@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 
-export async function getAdmissions(status = '') {
-  let admissions =  await fetch(
+export async function getAdmissions(status = "") {
+  let admissions = await fetch(
     `${process.env.BASE_URL}api/admission?status=${status}`,
     {
       cache: "no-cache",
@@ -13,22 +13,15 @@ export async function getAdmissions(status = '') {
   return admissions;
 }
 
-export async function addAdmission(formData) {
-  const obj = {
-    startDate: formData.get("startDate"),
-    endDate: formData.get("endDate"),
-    course: formData.get("course"),
-    batch: formData.get("batch"),
-  };
+export async function addApplication(obj) {
   console.log("Obj=>", obj);
 
-  const batch = await fetch(`${process.env.BASE_URL}api/admission`, {
+  const batch = await fetch(`${process.env.BASE_URL}api/application`, {
     method: "POST",
     body: JSON.stringify(obj),
+    cache: "no-cache",
   });
-  if (batch.ok) {
-    revalidatePath("/admin/admissions");
-  }
+  return await batch.json();
 }
 
 export async function updateAdmission(id, status) {
