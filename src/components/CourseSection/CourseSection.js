@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import { ApplicationModalForm } from "../Dialogs/ApplicationModal";
+import Link from "next/link";
 export function CourseSection({ admissions, session }) {
   return (
     <section className="container mx-auto my-10 ">
@@ -28,7 +29,14 @@ export function CourseSection({ admissions, session }) {
                 <p>{admission.course.description}</p>
               </CardContent>
               <CardFooter>
-                <ApplicationModalForm session={session} admission={admission} />
+                {session ? (
+                  <ApplicationModalForm
+                    session={session}
+                    admission={admission}
+                  />
+                ) : (
+                  <Link href={"/signin"}>Sign in to Apply</Link>
+                )}
               </CardFooter>
             </Card>
           );
