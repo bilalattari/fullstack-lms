@@ -63,3 +63,22 @@ export async function GET(req) {
     console.log(err);
   }
 }
+
+export async function PUT(request) {
+  await connectDB();
+  const obj = await request.json();
+  const { id, status } = obj;
+
+  const updated = await ApplicationModal.findOneAndUpdate(
+    { _id: id },
+    {
+      status: status,
+    }
+  ).exec();
+
+  return Response.json({
+    error: false,
+    msg: "Admission Added Successfully",
+    application: updated,
+  });
+}

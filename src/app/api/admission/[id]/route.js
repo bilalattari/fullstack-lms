@@ -5,15 +5,17 @@ import { AdmissionModal } from "@/lib/modals/AdmissionModal";
 import { ApplicationModal } from "@/lib/modals/ApplicationModal";
 
 export async function GET(req, { params }) {
+  const id = (await params).id;
+
   await connectDB();
 
-  const admissions = await AdmissionModal.findOne({ _id: params.id })
+  const admissions = await AdmissionModal.findOne({ _id: id })
     .populate("course", "title description")
     .populate("batch", "title")
     .lean();
 
   const applications = await ApplicationModal.find({
-    admission: params.id,
+    admission: id,
   }).populate("user", "fullname email profileImg");
 
   return Response.json({

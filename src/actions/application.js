@@ -16,7 +16,6 @@ export async function getApplications({
       cache: "no-cache",
     }
   );
-  console.log("applications=>", applications.ok);
   applications = await applications.json();
   return applications;
 }
@@ -32,8 +31,8 @@ export async function addApplication(obj) {
   return await batch.json();
 }
 
-export async function updateAdmission(id, status) {
-  const batch = await fetch(`${process.env.BASE_URL}api/admission`, {
+export async function updateApplication(id, status, admissionId) {
+  const batch = await fetch(`${process.env.BASE_URL}api/application`, {
     method: "PUT",
     body: JSON.stringify({
       id,
@@ -41,6 +40,6 @@ export async function updateAdmission(id, status) {
     }),
   });
   if (batch.ok) {
-    revalidatePath("/admin/admissions");
+    revalidatePath(`/admin/admissions/${admissionId}`);
   }
 }

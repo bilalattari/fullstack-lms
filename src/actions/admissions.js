@@ -2,8 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 
-export async function getAdmissions(status = '') {
-  let admissions =  await fetch(
+export async function getAdmissions(status = "") {
+  let admissions = await fetch(
     `${process.env.BASE_URL}api/admission?status=${status}`,
     {
       cache: "no-cache",
@@ -11,6 +11,12 @@ export async function getAdmissions(status = '') {
   );
   admissions = await admissions.json();
   return admissions;
+}
+
+export async function getSingleAdmission(id) {
+  let admission = await fetch(`${process.env.BASE_URL}api/admission/${id}`);
+  admission = await admission.json();
+  return admission;
 }
 
 export async function addAdmission(formData) {
