@@ -10,7 +10,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, ChevronDown, EyeIcon, MoreHorizontal } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -39,6 +39,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { updateAdmission } from "@/actions/admissions";
+import Link from "next/link";
 
 // Sample data
 
@@ -122,23 +123,28 @@ export const columns = [
       const admission = row.original;
 
       return (
-        <Select
-          defaultValue={row.getValue("status")}
-          onValueChange={async (value) => {
-            console.log("value=>", value);
-            console.log("id=>", admission._id);
-            await updateAdmission(admission._id, value);
-          }}
-        >
-          <SelectTrigger className="w-[100px]">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="pending">pending</SelectItem>
-            <SelectItem value="open">open</SelectItem>
-            <SelectItem value="close">close</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex gap-5">
+          <Link href={`/admin/admissions/${admission._id}`}>
+            <EyeIcon className="bg-secondary text-primary" />
+          </Link>
+          <Select
+            defaultValue={row.getValue("status")}
+            onValueChange={async (value) => {
+              console.log("value=>", value);
+              console.log("id=>", admission._id);
+              await updateAdmission(admission._id, value);
+            }}
+          >
+            <SelectTrigger className="w-[100px]">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="pending">pending</SelectItem>
+              <SelectItem value="open">open</SelectItem>
+              <SelectItem value="close">close</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       );
     },
   },

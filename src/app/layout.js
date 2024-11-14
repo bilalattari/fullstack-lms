@@ -3,6 +3,7 @@ import "./globals.css";
 import { motion } from "framer-motion";
 import Transition from "@/components/TransitionProvider/TransitionProvider";
 import { Toaster } from "@/components/ui/toaster";
+import Header from "@/components/Header/Header";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Header />
         <main>{children}</main>
         <Toaster />
       </body>

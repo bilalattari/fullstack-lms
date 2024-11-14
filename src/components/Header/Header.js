@@ -11,6 +11,8 @@ export default async function Header() {
         {session ? (
           <div className="flex gap-2 items-center">
             <h1>{session.user.email}</h1>
+
+            <Link href={"/mycourses"}>My Courses</Link>
             <form
               action={async () => {
                 "use server";

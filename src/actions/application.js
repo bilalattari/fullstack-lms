@@ -2,15 +2,23 @@
 
 import { revalidatePath } from "next/cache";
 
-export async function getAdmissions(status = "") {
-  let admissions = await fetch(
-    `${process.env.BASE_URL}api/admission?status=${status}`,
+export async function getApplications({
+  admission = "",
+  user = "",
+  batch = "",
+  course = "",
+}) {
+  let applications = await fetch(
+    `${process.env.BASE_URL}api/application?admission=${admission || ""}&user=${
+      user || ""
+    }&batch=${batch || ""}&course=${course || ""}`,
     {
       cache: "no-cache",
     }
   );
-  admissions = await admissions.json();
-  return admissions;
+  console.log("applications=>", applications.ok);
+  applications = await applications.json();
+  return applications;
 }
 
 export async function addApplication(obj) {

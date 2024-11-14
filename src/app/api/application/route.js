@@ -14,7 +14,6 @@ export async function POST(request) {
     user: obj.user,
   });
 
-  console.log("application in backend=>", application);
   if (application) {
     return Response.json({
       error: true,
@@ -33,30 +32,34 @@ export async function POST(request) {
 
 export async function GET(req) {
   await connectDB();
-  const reqUrl = req.url;
-  const { searchParams } = new URL(reqUrl);
-  const query = {};
-  if (searchParams.get("course")) {
-    query.course = searchParams.get("course");
-  }
-  if (searchParams.get("batch")) {
-    query.batch = searchParams.get("batch");
-  }
-  if (searchParams.get("admission")) {
-    query.admission = searchParams.get("admission");
-  }
-  if (searchParams.get("user")) {
-    query.user = searchParams.get("user");
-  }
+  try {
+    const reqUrl = req.url;
+    const { searchParams } = new URL(reqUrl);
+    const query = {};
+    if (searchParams.get("course")) {
+      query.course = searchParams.get("course");
+    }
+    if (searchParams.get("batch")) {
+      query.batch = searchParams.get("batch");
+    }
+    if (searchParams.get("admission")) {
+      query.admission = searchParams.get("admission");
+    }
+    if (searchParams.get("user")) {
+      query.user = searchParams.get("user");
+    }
 
-  const applications = await ApplicationModal.find(query)
-    .populate("course", "title")
-    .populate("batch", "title")
-    .populate("admission", "startDate endDate status")
-    .populate("user", "fullname email profileImg");
-  return Response.json({
-    error: false,
-    msg: "Applications Fetched Successfully",
-    applications,
-  });
+    const applications = await ApplicationModal.find(query)
+      .populate("course", "title")
+      .populate("batch", "title")
+      .populate("admission", "startDate endDate status")
+      .populate("user", "fullname email profileImg");
+    return Response.json({
+      error: false,
+      msg: "Applications Fetched Successfully",
+      applications,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 }

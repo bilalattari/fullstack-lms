@@ -9,7 +9,6 @@ export default async function Home() {
   const session = await auth();
   return (
     <div>
-      <Header />
       <HeroSection />
       <CourseSection session={session} admissions={admissions} />
     </div>
